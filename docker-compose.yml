@@ -1,0 +1,20 @@
+version: "3"
+services:
+  praguebest-reverse-proxy:
+    build: .
+    volumes:
+      - ./.docker/etc/caddy:/etc/caddy:delegated
+    labels:
+      - "traefik.backend=praguebest-reverse-proxy"
+      - "traefik.frontend.rule=HostRegexp: {subdomains:(.+[.])+}pb"
+      - "traefik.docker.network=docker-www"
+      - "traefik.port=80"
+    networks:
+      - default
+      - proxy
+    restart: "no"
+
+networks:
+  proxy:
+    external:
+      name: docker-www

@@ -1,0 +1,7 @@
+http://mastershop.pb {
+    reverse_proxy * www.mastershop:80 # www.mastershop is a name of another Docker instance, available via docker compose DNS
+}
+
+http://www.mastershop.pb {
+    redir http://mastershop.pb{uri}
+}
